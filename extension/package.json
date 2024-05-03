@@ -43,5 +43,10 @@
     "typescript": "^5.4.5",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@fastify/type-provider-json-schema-to-ts": "^3.0.0",
+    "@types/jest": "^29.5.12",
+    "fastify": "^4.26.2"
   }
 }
