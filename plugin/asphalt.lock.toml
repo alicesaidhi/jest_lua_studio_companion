@@ -1,0 +1,27 @@
+[entries."images/check/check.png"]
+hash = "c74d86c9f0ea4f6841856aa1355d5392b4ce93aac25b00ee6d9ff16586fce9d9"
+asset_id = 17371694141
+
+[entries."images/check/error.png"]
+hash = "a622cb9b7e6bc849c1785db599d66af720779e2600a1176a5a8d13d9756458c7"
+asset_id = 17371694391
+
+[entries."images/check/focus.png"]
+hash = "39c0713033c00b0218335541d565ebbc52b1cdcad641513c78be4a9c4d13fd70"
+asset_id = 17371694738
+
+[entries."images/check/skip.png"]
+hash = "759267e9e69ef64950b577fedf5bca7f206f388ca50a90045f647bfc477aecb4"
+asset_id = 17371695106
+
+[entries."images/check/todo.png"]
+hash = "e10d6d48000805d302d7a31eb3a00bbe78ee4b17cbdd43415ea305b931a8c888"
+asset_id = 17371695382
+
+[entries."images/status/connected.png"]
+hash = "f9ff040f18efdc5e4162181a9e0c691a296d9de89abf381f844b217d86a5fdc4"
+asset_id = 17371695681
+
+[entries."images/status/disconnected.png"]
+hash = "cdcdc14798c6e7c82e531c7706ecbe6de11aa6e81e616508863a1452e3855484"
+asset_id = 17371695870

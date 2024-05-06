@@ -1,52 +1,82 @@
 {
-  "name": "jest-lua-companion",
-  "displayName": "Jest Lua Companion",
-  "description": "A companion extension to help execute Jest within Roblox Studio",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.88.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "jest-lua-companion.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
-  },
-  "devDependencies": {
-    "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
-    "@types/vscode": "^1.88.0",
-    "@typescript-eslint/eslint-plugin": "^7.7.1",
-    "@typescript-eslint/parser": "^7.7.1",
-    "@vscode/test-cli": "^0.0.8",
-    "@vscode/test-electron": "^2.3.9",
-    "eslint": "^8.57.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.4.5",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
-    "@fastify/type-provider-json-schema-to-ts": "^3.0.0",
-    "@types/jest": "^29.5.12",
-    "fastify": "^4.26.2"
-  }
+	"name": "jest-lua-companion",
+	"displayName": "Jest Lua Companion",
+	"description": "A companion extension to help execute Jest within Roblox Studio",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.88.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"workspaceContains:**/*.luau",
+		"workspaceContains:**/*.lua"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"title": "Run tests in Studio",
+				"command": "jest-lua-companion.runTests",
+				"category": "JestLua Companion"
+			},
+			{
+				"title": "Install Plugin",
+				"command": "jest-lua-companion.installPlugin",
+				"category": "JestLua Companion"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "jest-lua-companion.runTests",
+				"key": "ctrl+;",
+				"mac": "cmd+;"
+			}
+		],
+		"configuration": {
+			"title": "JestLua Companion",
+			"properties": {
+				"jest-lua-companion.runFile": {
+					"type": "string",
+					"default": "",
+					"description": "The Luau file inside your Roblox Studio session to run, split by /."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/micromatch": "^4.0.7",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "18.x",
+		"@types/vscode": "^1.88.0",
+		"@typescript-eslint/eslint-plugin": "^7.7.1",
+		"@typescript-eslint/parser": "^7.7.1",
+		"@vscode/test-cli": "^0.0.8",
+		"@vscode/test-electron": "^2.3.9",
+		"eslint": "^8.57.0",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.4.5",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
+	},
+	"dependencies": {
+		"@fastify/type-provider-json-schema-to-ts": "^3.0.0",
+		"@types/jest": "^29.5.12",
+		"ajv": "^8.13.0",
+		"fastify": "^4.26.2",
+		"micromatch": "^4.0.5",
+		"toml": "^3.0.0"
+	}
 }

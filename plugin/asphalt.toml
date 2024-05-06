@@ -1,0 +1,12 @@
+asset_dir = "images/"
+write_dir = "src/"
+
+[creator]
+type = "user"
+id = 1160098333
+
+[codegen]
+typesript = false
+luau = true
+style = "nested"
+output_name = "assets"

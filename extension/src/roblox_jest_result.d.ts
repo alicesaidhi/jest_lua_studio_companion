@@ -1,3 +1,11 @@
+export type Status =
+	| "passed"
+	| "failed"
+	| "skipped"
+	| "pending"
+	| "todo"
+	| "disabled";
+
 export type PerfStats = {
 	end: number;
 	runtime: number;
@@ -28,7 +36,7 @@ export type TestResult = {
 	invocations: number;
 	numPassingAsserts: number;
 	retryReasons: unknown[];
-	status: string;
+	status: Status;
 	title: string;
 };
 

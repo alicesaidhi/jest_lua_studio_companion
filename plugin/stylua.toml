@@ -1,0 +1,3 @@
+column_width = 80
+call_parentheses = "None"
+collapse_simple_statement = "Always"

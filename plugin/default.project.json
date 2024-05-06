@@ -1,0 +1,17 @@
+{
+	"name": "jestlua_companion",
+
+	"tree": {
+		"$className": "DataModel",
+
+		"ServerStorage": {
+			"JestLuaCompanion": {
+				"$path": "Packages",
+
+				"JestLuaCompanion": {
+					"$path": "src"
+				}
+			}
+		}
+	}
+}

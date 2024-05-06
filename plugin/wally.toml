@@ -1,0 +1,11 @@
+[package]
+name = "alicesaidhi/rubberducky"
+version = "0.1.0"
+private = true
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+videkit = "alicesaidhi/videkit-ty@0.1.1"
+vide = "aloroid/vide-with-types@0.2.3"
+shared_toolbar = "stravant/create-shared-toolbar@0.1.0"

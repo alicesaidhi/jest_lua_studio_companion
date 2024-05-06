@@ -1,31 +1,101 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import { run_handler } from "./run_tests";
+import * as discover from "./discover";
+import * as fs from "fs";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log(
-		'Congratulations, your extension "jest-lua-companion" is now active!'
+	// work maybe??? please ???
+
+	const controller = vscode.tests.createTestController(
+		"jest-lua-companion",
+		"JestLua Tests"
 	);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand(
-		"jest-lua-companion.helloWorld",
-		() => {
-			// The code you place here will be executed every time your command is executed
-			// Display a message box to the user
-			vscode.window.showInformationMessage(
-				"Hello World from Jest Lua Companion!"
-			);
+	const run_profile = controller.createRunProfile(
+		"Run",
+		vscode.TestRunProfileKind.Run,
+		(request, token) => {
+			const stop = run_handler(controller, request);
+			token.onCancellationRequested(() => stop);
 		}
 	);
 
-	context.subscriptions.push(disposable);
+	run_profile.label = "Jest Testing";
+
+	vscode.commands.registerCommand("jest-lua-companion.runTests", () => {
+		run_handler(
+			controller,
+			new vscode.TestRunRequest([], [], run_profile, false)
+		);
+	});
+	context.subscriptions.push(controller, run_profile);
+
+	try {
+		const watch =
+			vscode.workspace.createFileSystemWatcher("**/sourcemap.json");
+
+		context.subscriptions.push(watch);
+
+		const get_test_item = (
+			items: vscode.TestItemCollection,
+			id: string,
+			label: string,
+			uri?: vscode.Uri
+		) => {
+			const child = items.get(id);
+
+			if (child) {
+				child.label = label;
+				return child;
+			} else {
+				const test_item = controller.createTestItem(id, label, uri);
+				items.add(test_item);
+				return test_item;
+			}
+		};
+
+		const update_tests = () => {
+			console.log("updating tests");
+			const workspace = discover.get_workspace_folder();
+			const result = discover.search_for_tests_within_sourcemap();
+
+			result.tests.forEach((object) => {
+				const hierarchy = result.hierarchy.get(object);
+				const file_path = object.filePaths?.at(0);
+
+				console.log(hierarchy!.join("/"));
+				get_test_item(
+					controller.items,
+					hierarchy!.join("/"),
+					object.filePaths?.at(0) ?? hierarchy!.join("/"),
+					file_path
+						? vscode.Uri.joinPath(workspace.uri, file_path)
+						: undefined
+				);
+			});
+		};
+
+		update_tests();
+		watch.onDidChange(update_tests);
+		watch.onDidCreate(update_tests);
+
+		console.log("Created watch");
+	} catch (e: any) {
+		let err: Error = e;
+		if (!(e instanceof Error)) {
+			err = new Error(e);
+		}
+
+		vscode.window.showErrorMessage(
+			`Attempted to listen to sourcemap.json (${err}).`
+		);
+	}
+
+	console.log("started extension");
 }
 
 // This method is called when your extension is deactivated
