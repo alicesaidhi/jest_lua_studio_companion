@@ -2,10 +2,9 @@ import Ajv, { JSONSchemaType } from "ajv";
 
 const config_file_schema = {
 	type: "object",
-	required: ["cwdInstance", "roots"],
+	required: ["roots"],
 
 	properties: {
-		cwdInstance: { type: "string" },
 		roots: {
 			type: "array",
 			uniqueItems: true,
