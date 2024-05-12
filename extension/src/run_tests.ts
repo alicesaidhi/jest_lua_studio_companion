@@ -70,7 +70,9 @@ export function run_handler(
 		},
 		handler: (req, rep) => {
 			const body = req.body;
-			body.forEach((str) => run.appendOutput("\r\n" + str));
+			body.forEach((str) =>
+				run.appendOutput("\r\n" + str.replaceAll("\n", "\r\n"))
+			);
 			rep.status(200).send();
 		},
 	});

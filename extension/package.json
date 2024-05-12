@@ -20,11 +20,6 @@
 				"title": "Run tests in Studio",
 				"command": "jest-lua-companion.runTests",
 				"category": "JestLua Companion"
-			},
-			{
-				"title": "Install Plugin",
-				"command": "jest-lua-companion.installPlugin",
-				"category": "JestLua Companion"
 			}
 		],
 		"keybindings": [

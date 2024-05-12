@@ -19,18 +19,32 @@ export function activate(context: vscode.ExtensionContext) {
 		"Run",
 		vscode.TestRunProfileKind.Run,
 		(request, token) => {
-			const stop = run_handler(controller, request);
-			token.onCancellationRequested(() => stop);
+			try {
+				const stop = run_handler(controller, request);
+				token.onCancellationRequested(() => stop);
+			} catch (err: any) {
+				const e: Error = err;
+				vscode.window.showErrorMessage(
+					`Something went wrong while trying to run tests (${e.message}).`
+				);
+			}
 		}
 	);
 
 	run_profile.label = "Jest Testing";
 
 	vscode.commands.registerCommand("jest-lua-companion.runTests", () => {
-		run_handler(
-			controller,
-			new vscode.TestRunRequest([], [], run_profile, false)
-		);
+		try {
+			run_handler(
+				controller,
+				new vscode.TestRunRequest([], [], run_profile, false)
+			);
+		} catch (err: any) {
+			const e: Error = err;
+			vscode.window.showErrorMessage(
+				`Something went wrong while trying to run tests (${e.message}).`
+			);
+		}
 	});
 	context.subscriptions.push(controller, run_profile);
 
